@@ -6,3 +6,6 @@
 /httpRequests/
 /.idea
 Snake.iml
+/server/node_modules
+/server/server.iml
+/server/scores.json
