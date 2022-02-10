@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>playsnake.io</title>
+    <link rel="stylesheet" href="../css/styling.css">
+</head>
+<body>
+
+<nav class="navMenu">
+    <a href="../index.html">Home</a>
+    <a href="../html/scoreboard.html">Scoreboard</a>
+    <a href="../html/multiplayer.html">Live View</a>
+    <a href="../html/settings.html">Settings</a>
+</nav>
+
+<h1 id="score">Score: 0</h1>
+
+<div class="gameMenu">
+    <h1>
+        New Game
+    </h1>
+    <input type="text" id="name" placeholder="Playername...">
+    <button id="playButton" onclick="start()">Play!</button>
+</div>
+
+<div class="gameOver">
+    <h1>
+        Game Over!
+    </h1>
+    <a href="singleplayer.html">
+        Play Again?
+    </a>
+</div>
+
+<canvas class="canvas"></canvas>
+
+<script src="../js/singleplayer.js"></script>
+</body>
+</html>
