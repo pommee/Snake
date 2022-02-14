@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>playsnake.io</title>
+    <link rel="stylesheet" href="../css/stylingMultiplayer.css">
+</head>
+<body>
+
+<nav class="navMenu">
+    <a href="../index.html">Home</a>
+    <a href="/html/scoreboard.html">Scoreboard</a>
+    <a href="/html/multiplayer.html">Live View</a>
+    <a href="/html/settings.html">Settings</a>
+</nav>
+
+<div class="menu">
+    <h1>Multiplayer!</h1>
+    <input type="text" id="playerName" placeholder="pommee">
+    <button onclick="newGame()">Play!</button>
+    <h1>Join Game</h1>
+    <input type="text" id="sessionID" placeholder="78912398">
+    <button onclick="joinGame()">Join</button>
+</div>
+
+<p id="inviteID"></p>
+
+<div class="playingField">
+    <div class="playerOne">
+        <h1>Player One</h1>
+        <h1 id="playerScore">Score: 0</h1>
+        <button onclick="readyUp()">Ready</button>
+        <canvas class="canvas">
+        </canvas>
+    </div>
+    <div class="playerTwo">
+        <h1>Player Two</h1>
+        <h1 id="opponentScore">Score: 0</h1>
+        <canvas class="canvasOpponent"></canvas>
+    </div>
+    <div style="display: block" class="chatDiv">
+        <label for="chat"></label><textarea id="chatMessages" readonly cols="4"></textarea>
+        <input type="text" id="chat" onkeypress="sendMessage()" placeholder="Type a message...">
+    </div>
+</div>
+
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        alert("Multiplayer is not supported by smart-phones!")
+        window.location.href = "../";
+    }
+</script>
+<script src="../js/multiplayer.js"></script>
+</body>
+</html>
