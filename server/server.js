@@ -11,6 +11,14 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
+
+/*
+
+        app is used for scoreboard
+        wss is used for multiplayer
+
+ */
+
 app.get("/getScores", (req, res) => {
     let response = [];
     fs.readFile('scores.json', (err, data) => {
@@ -32,7 +40,7 @@ app.get("/getScores", (req, res) => {
                 }
                 if (bestGame.game === null)
                     bestGame = userGame
-                else if (game[Object.keys(game)[0]].score > bestGame[Object.keys(bestGame)[0]].score)
+                else if (game.score > bestGame.score)
                     bestGame = userGame
             }
             allPlayerGames.push(bestGame)
