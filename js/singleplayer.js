@@ -25,8 +25,11 @@ let interval;
 let startCounter = 0;
 let score = 0;
 let playerName;
+let startTime;
+let playerMoves = [];
 
 function start() {
+    startTime = new Date();
     playerName = document.querySelector("#name").value;
     document.querySelector(".gameMenu").style.visibility = "hidden";
     interval = setInterval(moveSnake, 100);
@@ -102,10 +105,12 @@ function drawSnake() {
     snakeBody.push([currentPosition['x'], currentPosition['y']]);
     ctx.fillStyle = "white";
     ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize - .5, gridSize - .5);
+    playerMoves.push([currentPosition['x'], currentPosition['y']]);
     if (startCounter >= 3) {
         for (let i = 0; i < snakeLength; i++) {
             // Snake has eaten itself
             if (snakeBody[i][0] === currentPosition["x"] && snakeBody[i][1] === currentPosition["y"] || checkBorder()) {
+                submitScore()
                 document.querySelector(".gameOver").style.visibility = "visible";
                 clearInterval(interval);
             }
@@ -164,4 +169,30 @@ function isFoodInSnake(x, y) {
         }
     }
     return false;
+}
+
+function submitScore() {
+    if (score > 1) {
+        console.log("SCORE SUBMITERD")
+        fetch('http://localhost:15486/submitScore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "name": playerName,
+                "score": score,
+                "start": startTime,
+                "playerMoves": playerMoves
+            })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                    console.log(data)
+                }
+            )
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
 }
