@@ -1,5 +1,5 @@
 function httpGet() {
-    var xmlHttp = new XMLHttpRequest();
+    const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "http://localhost:15486/getScores", false); // false for synchronous request
     xmlHttp.send(null);
     let scores = JSON.parse(xmlHttp.responseText)
@@ -8,15 +8,21 @@ function httpGet() {
 
 function displayLeaderboard(data) {
     let html = "";
+    data = sortLeaderboard(data)
     for (let game of data) {
-        console.log(game)
         html += `
         <tr><td>${game.player}</td>
         <td>${game.score}</td></tr>
     `;
     }
-    console.log(html)
     document.querySelector('#thingy').innerHTML = html;
+}
+
+function sortLeaderboard(arr) { // Sort scores in ascending order
+    arr.sort(function (a, b) {
+        return b.score - a.score;
+    });
+    return arr;
 }
 
 httpGet()
