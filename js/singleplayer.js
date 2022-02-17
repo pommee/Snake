@@ -173,7 +173,6 @@ function isFoodInSnake(x, y) {
 
 function submitScore() {
     if (score > 1) {
-        console.log("SCORE SUBMITERD")
         fetch('http://localhost:15486/submitScore', {
             method: 'POST',
             headers: {

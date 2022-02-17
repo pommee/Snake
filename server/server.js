@@ -22,31 +22,49 @@ app.use(express.json());
 app.get("/getScores", (req, res) => {
     let response = [];
     fs.readFile('scores.json', (err, data) => {
-        if (err) throw err;
-        let allPlayerGames = [];
-        for (let games of JSON.parse(data)) {
-            let name = games.name;
-            let bestGame = {"game": null};
-            for (let index in games.games) {
-                let game = games.games[index]
-                let gameID = Object.keys(game)[0]
-                game = game[Object.keys(game)[0]]
-                let userGame = {
-                    "player": name,
-                    "ID": gameID,
-                    "score": game.score,
-                    "start": game.start,
-                    "moves": game.moves
+            if (err) throw err;
+            let allPlayerGames = [];
+            for (let games of JSON.parse(data)) {
+                let name = games.name;
+                let bestGame = {"game": null};
+                if (games.games.length === undefined) {// Player only has one game
+                    let game = games.games;
+                    let gameID = Object.keys(game)[0]
+                    game = game[Object.keys(game)[0]]
+                    let userGame = {
+                        "player": name,
+                        "ID": gameID,
+                        "score": game.score,
+                        "start": game.start,
+                        "moves": game.moves
+                    }
+                    if (bestGame.game === null)
+                        bestGame = userGame
+                    else if (game.score > bestGame.score)
+                        bestGame = userGame
+                } else {
+                    for (let index in games.games) {
+                        let game = games.games[index]
+                        let gameID = Object.keys(game)[0]
+                        game = game[Object.keys(game)[0]]
+                        let userGame = {
+                            "player": name,
+                            "ID": gameID,
+                            "score": game.score,
+                            "start": game.start,
+                            "moves": game.moves
+                        }
+                        if (bestGame.game === null)
+                            bestGame = userGame
+                        else if (game.score > bestGame.score)
+                            bestGame = userGame
+                    }
                 }
-                if (bestGame.game === null)
-                    bestGame = userGame
-                else if (game.score > bestGame.score)
-                    bestGame = userGame
+                allPlayerGames.push(bestGame)
             }
-            allPlayerGames.push(bestGame)
+            res.send(allPlayerGames)
         }
-        res.send(allPlayerGames)
-    })
+    )
 })
 
 app.post("/submitScore", (req, res) => {
