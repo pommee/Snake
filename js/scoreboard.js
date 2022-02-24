@@ -18,7 +18,7 @@ function displayLeaderboard(data) {
     document.querySelector('#thingy').innerHTML = html;
 }
 
-function sortLeaderboard(arr) { // Sort scores in ascending order
+function sortLeaderboard(arr) { // Sort scores in descending order
     arr.sort(function (a, b) {
         return b.score - a.score;
     });
